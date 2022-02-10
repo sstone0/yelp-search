@@ -19,7 +19,6 @@ export default async function handler({ query }, res) {
         "Access-Control-Allow-Origin": "*",
       },
     });
-
     let data = await businesses.json();
     searchUrl = baseUrl;
 

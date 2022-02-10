@@ -1,10 +1,10 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import appReducer from "./reducer";
 
-const AppContext = createContext();
+export const AppContext = createContext();
 
-export function AppState({ children }) {
-  let appState = {
+export const AppProvider = ({ children }) => {
+  const appState = {
     businesses: [],
     term: "",
     location: "New York",
@@ -15,12 +15,12 @@ export function AppState({ children }) {
   const [state, dispatch] = useReducer(appReducer, appState);
 
   const searchYelp = async (term, location, sortBy) => {
+    console.log(sortBy);
     try {
       const res = await fetch(
         `/api/search?term=${term}&location=${location}&sort_by=${sortBy}`
       );
       const data = await res.json();
-
       dispatch({
         type: "SEARCH_YELP",
         payload: data,
@@ -55,13 +55,10 @@ export function AppState({ children }) {
         searchYelp,
         setTermParameters,
         clearBusinesses,
-      }}
-    >
+      }}>
       {children}
     </AppContext.Provider>
   );
-}
+};
 
-export function useAppContext() {
-  return useContext(AppContext);
-}
+export default AppProvider;

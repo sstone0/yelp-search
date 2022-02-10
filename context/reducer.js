@@ -3,7 +3,7 @@ export default function appReducer(state, action) {
     case "SEARCH_YELP":
       return {
         ...state,
-        businesses: [...state.businesses, ...action.payload.businesses],
+        businesses: [...action.payload.businesses],
         loading: false,
       };
     case "CLEAR_BUSINESSES":

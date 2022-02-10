@@ -1,6 +1,8 @@
-import { useAppContext } from "../context/appStore";
-import BusinessItem from "./businessItem";
 import styled from "styled-components";
+import { useContext } from "react";
+import { AppContext } from "../context/appStore";
+
+import BusinessItem from "./businessItem";
 import MaxWidthSection from "./Layout/MaxWidthSection";
 
 const BusinessListWrapper = styled(MaxWidthSection)`
@@ -10,26 +12,7 @@ const BusinessListWrapper = styled(MaxWidthSection)`
 `;
 
 export default function BusinessList() {
-  const appState = useAppContext();
-  const {
-    businesses,
-    term,
-    location,
-    sortBy,
-    loading,
-    searchYelp,
-    clearBusinesses,
-  } = appState;
-
-  const sortOption = (str) => {
-    const sortByOptions = {
-      best_match: "Best Match",
-      rating: "Highest Rated",
-      review_count: "Most Reviewed",
-      distance: "Distance",
-    };
-    return sortByOptions[str];
-  };
+  const { businesses } = useContext(AppContext);
 
   return (
     <BusinessListWrapper>

@@ -1,12 +1,12 @@
-import { AppState } from "../context/appStore";
+import AppProvider from "../context/appStore";
 import "../styles/globals.css";
 import "../styles/globalStyles.scss";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AppState>
+    <AppProvider>
       <Component {...pageProps} />
-    </AppState>
+    </AppProvider>
   );
 }
 

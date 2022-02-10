@@ -15,6 +15,11 @@ const BusinessWrapper = styled.div`
   padding: 1rem 2rem;
   transition: 0.2s ease;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    box-shadow: 0px 0px 5px 1px #e6e6e6;
+  }
+
   &:hover {
     transform: translateY(-4px);
     cursor: pointer;
@@ -51,6 +56,10 @@ const BusinessWrapper = styled.div`
     margin-right: 1rem;
     border-radius: 3px;
 
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+
     img {
       width: 100%;
       height: 100%;
@@ -58,7 +67,7 @@ const BusinessWrapper = styled.div`
     }
   }
 
-  @media (max-width: 1100px) {
+  @media (max-width: 550px) {
     width: calc(100% - 1rem);
   }
 `;
@@ -75,13 +84,13 @@ const BusinessCardInfo = styled.div`
 const BusinessItem = ({ business }) => {
   return (
     <BusinessWrapper>
-      <div className="image-container">
+      <div className='image-container'>
         <img src={business.image} />
       </div>
       <BusinessCardInfo>
         <h1>{business.name}</h1>
-        <div className="bussinessInfo">
-          <div className="address">
+        <div className='bussinessInfo'>
+          <div className='address'>
             <ul>
               <li>
                 <p>{business.address}</p>
@@ -94,14 +103,14 @@ const BusinessItem = ({ business }) => {
               </li>
             </ul>
           </div>
-          <div className="flex-apart">
+          <div className='flex-apart'>
             <span>Rating:</span>
             <p>
-              <FaStar className="starIcon" />
+              <FaStar className='starIcon' />
               {business.rating}
             </p>
           </div>
-          <div className="flex-apart">
+          <div className='flex-apart'>
             <span>Reviews:</span>
             <p>{business.reviewCount}</p>
           </div>

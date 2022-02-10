@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useAppContext } from "../context/appStore";
+import { useState, useEffect, useContext } from "react";
+import { AppContext } from "../context/appStore";
 import MaxWidthSection from "./Layout/MaxWidthSection";
 import styled from "styled-components";
 import Image from "next/image";
@@ -19,6 +19,10 @@ const SearchBarWrapper = styled(MaxWidthSection)`
   }
   button {
     z-index: 2;
+  }
+
+  @media (max-width: 640px) {
+    text-align: center;
   }
 `;
 
@@ -72,11 +76,19 @@ const InputWrapper = styled.div`
     &:focus-visible {
       outline: none;
     }
+
+    @media (max-width: 640px) {
+      width: 100%;
+      margin: 0 0 1rem 0;
+    }
+  }
+  @media (max-width: 640px) {
+    font-size: 20px;
+    flex-direction: column;
   }
 `;
 
 export default function SearchBar() {
-  const appState = useAppContext();
   const {
     term,
     location,
@@ -84,11 +96,7 @@ export default function SearchBar() {
     sortBy,
     clearBusinesses,
     setTermParameters,
-  } = appState;
-
-  useEffect(() => {
-    setState({ ...state, term: term });
-  }, [term]);
+  } = useContext(AppContext);
 
   const [state, setState] = useState({
     term: term,
@@ -109,12 +117,12 @@ export default function SearchBar() {
   };
 
   const handleSortbyChange = (sortByOptionValue) => {
-    console.log(sortByOptionValue);
     setState({ ...state, sortBy: sortByOptionValue });
   };
 
   const handleSearch = (e) => {
     console.log(state);
+    e.preventDefault();
     clearBusinesses();
     setTermParameters({
       term: state.term,
@@ -122,8 +130,17 @@ export default function SearchBar() {
       sortBy: state.sortBy,
     });
     searchYelp(state.term, state.location, state.sortBy);
-    e.preventDefault();
   };
+
+  const enterPress = (e) => {
+    if (e.keyCode === 13) {
+      handleSearch(e);
+    }
+  };
+
+  useEffect(() => {
+    setState({ ...state, term: term });
+  }, [term]);
 
   const renderSortByOptions = () => {
     return Object.keys(sortByOptions).map((sortByOption) => {
@@ -134,8 +151,7 @@ export default function SearchBar() {
           className={`sortby_option ${
             sortByOptionValue === state.sortBy ? "active" : ""
           }`}
-          onClick={handleSortbyChange.bind(this, sortByOptionValue)}
-        >
+          onClick={handleSortbyChange.bind(this, sortByOptionValue)}>
           {sortByOption}
         </li>
       );
@@ -145,28 +161,28 @@ export default function SearchBar() {
   return (
     <SearchBarWrapper>
       <Image
-        layout="fill"
-        className="object-center object-cover"
-        src="/banner_background.jpg"
-        alt="title"
+        layout='fill'
+        className='object-center object-cover'
+        src='/banner_background.jpg'
+        alt='title'
       />
       <SortByOptionsWrapper>
         <ul>{renderSortByOptions()}</ul>
       </SortByOptionsWrapper>
       <InputWrapper>
         <input
-          className="term"
-          name="term"
-          placeholder="Search Terms"
+          className='term'
+          name='term'
+          placeholder='Search Terms'
           onChange={handleInputChange}
           value={state.term}
-        ></input>
+          onKeyUp={enterPress}></input>
         <input
-          className="location"
-          name="location"
-          placeholder="Location"
+          className='location'
+          name='location'
+          placeholder='Location'
           onChange={handleInputChange}
-        ></input>
+          onKeyUp={enterPress}></input>
       </InputWrapper>
       <Button onClick={handleSearch}>
         <FaSearch />
