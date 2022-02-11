@@ -71,6 +71,7 @@ const InputWrapper = styled.div`
     padding: 10px;
     border: none;
     border-radius: 3px;
+    font-size: 1em;
 
     &:focus,
     &:focus-visible {
@@ -83,7 +84,6 @@ const InputWrapper = styled.div`
     }
   }
   @media (max-width: 640px) {
-    font-size: 20px;
     flex-direction: column;
   }
 `;
