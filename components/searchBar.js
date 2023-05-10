@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import styled from "styled-components";
 import { AppContext } from "../context/appStore";
 import MaxWidthSection from "./Layout/MaxWidthSection";
-import styled from "styled-components";
-import Image from "next/image";
-import { FaSearch } from "react-icons/fa";
 
 const SearchBarWrapper = styled(MaxWidthSection)`
 	position: relative;
@@ -50,16 +50,6 @@ const SortByOptionsWrapper = styled.div`
 			border-bottom: 1px solid #f0c36c;
 		}
 	}
-`;
-
-const Button = styled.button`
-	margin: 0 auto;
-	width: 60px;
-	padding: 10px;
-	background: #c41200;
-	border: none;
-	border-radius: 3px;
-	color: white;
 `;
 
 const InputWrapper = styled.div`
@@ -162,34 +152,37 @@ export default function SearchBar() {
 	return (
 		<SearchBarWrapper>
 			<Image
-				layout="fill"
-				className="object-center object-cover"
-				src="/banner_background.jpg"
-				alt="title"
+				layout='fill'
+				className='object-cover object-center'
+				src='/banner_background.jpg'
+				alt='title'
 			/>
 			<SortByOptionsWrapper>
 				<ul>{renderSortByOptions()}</ul>
 			</SortByOptionsWrapper>
 			<InputWrapper>
 				<input
-					className="term"
-					name="term"
-					placeholder="Search Terms"
+					className='term'
+					name='term'
+					placeholder='Search Terms'
 					onChange={handleInputChange}
 					value={state.term}
 					onKeyUp={enterPress}
 				></input>
 				<input
-					className="location"
-					name="location"
-					placeholder="Location"
+					className='location'
+					name='location'
+					placeholder='Location'
 					onChange={handleInputChange}
 					onKeyUp={enterPress}
 				></input>
 			</InputWrapper>
-			<Button onClick={handleSearch}>
+			<button
+				className='mx-auto flex items-center justify-center rounded bg-[#c41200] p-4 text-white'
+				onClick={handleSearch}
+			>
 				<FaSearch />
-			</Button>
+			</button>
 		</SearchBarWrapper>
 	);
 }
